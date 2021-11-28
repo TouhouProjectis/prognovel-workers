@@ -1,0 +1,7 @@
+dist
+node_modules
+transpiled
+worker
+mock
+.DS_Store
+.env

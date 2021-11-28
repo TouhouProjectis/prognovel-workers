@@ -1,0 +1,10 @@
+name = "api-v2"
+type = "webpack"
+account_id = ""
+workers_dev = true
+route = ""
+zone_id = ""
+webpack_config = "webpack.config.js"
+kv-namespaces = [
+  { binding = "BUCKET", id = "" }
+]
