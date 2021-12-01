@@ -1,4 +1,11 @@
-# How to get ProgNovel backend
+# 🤖 ProgNovel Workers
+
+![maintained?](https://img.shields.io/badge/maintained%3F-yes-green.svg)
+![last commit](https://img.shields.io/github/last-commit/prognoveljs/prognovel-workers/develop)
+![commit](https://img.shields.io/github/commit-activity/m/prognoveljs/prognovel-workers/develop)
+![version](https://img.shields.io/github/package-json/v/prognoveljs/prognovel-workers)
+
+## How to get ProgNovel backend
 
 1. Get a Github and Cloudflare Workers account.
 2. Login to Cloudflare Workers. In Workers section, get your `Account ID` and create a new `API token` from Cloudflare Workers edit template. Your `API token` can be used to access your Cloudflare Workers account, so treat it as a password and keep it in safe place.
