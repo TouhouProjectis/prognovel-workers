@@ -31,11 +31,30 @@ export async function handleFetchImage(event: FetchEvent): Promise<Response> {
   };
 
   const key = `image:${params.novel ? params.novel + ':' : ''}${params.file}`;
-  const fileBuffer: any = await BUCKET.get(key, 'arrayBuffer');
-  // const { readable, writable } = new TransformStream();
-  // fileBuffer.pipeTo(writable);
+  let fileBuffer: any = await BUCKET.get(key, 'arrayBuffer');
+
+  try {
+    const { imageResizerService, width, height, type } = await event.request.json();
+    if (imageResizerService) {
+      const imageRes = await fetch(
+        imageResizerService + `/resize?width=${width}&height=${height}&type=${type || 'jpeg'}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'image/*',
+          },
+          body: fileBuffer,
+        },
+      );
+      fileBuffer = imageRes.body;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  const { readable, writable } = new TransformStream();
+  fileBuffer.pipeTo(writable);
   if (fileBuffer) {
-    return new Response(fileBuffer, {
+    return new Response(readable, {
       status: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
