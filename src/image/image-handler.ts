@@ -32,39 +32,51 @@ export async function handleFetchImage(event: FetchEvent): Promise<Response> {
 
   const key = `image:${params.novel ? params.novel + ':' : ''}${params.file}`;
   let fileBuffer: any = await BUCKET.get(key, 'arrayBuffer');
+  console.log('🍯 halo');
+  const { imageResizerService, width, height, type } =
+    event.request.method === 'POST' ? await event.request.clone().json() : ({} as any);
 
-  try {
-    const { imageResizerService, width, height, type } = await event.request.json();
-    if (imageResizerService) {
-      const imageRes = await fetch(
-        imageResizerService + `/resize?width=${width}&height=${height}&type=${type || 'jpeg'}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'image/*',
-          },
-          body: fileBuffer,
-        },
-      );
-      fileBuffer = imageRes.body;
-    }
-  } catch (error) {
-    console.error(error);
-  }
-  const { readable, writable } = new TransformStream();
-  fileBuffer.pipeTo(writable);
-  if (fileBuffer) {
-    return new Response(readable, {
-      status: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        // 'Cache-Control': 'private, max-age=86400000',
-        'Content-Type': 'image/png',
-      },
-    });
-  } else {
+  if (!fileBuffer) {
     return new Response('File not found.', {
       status: 404,
+    });
+  }
+
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    // 'Cache-Control': 'private, max-age=86400000',
+    'Content-Type': 'image/png',
+  };
+
+  if (imageResizerService) {
+    const imgUrl =
+      imageResizerService +
+      `/resize?width=${width}&height=${height}&type=${type || 'jpeg'}&nocrop=false&stripmeta=true`;
+    console.log('🎨 resize image...', imgUrl);
+    try {
+      const imageRes = (await fetch(imgUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'image/*',
+        },
+        body: fileBuffer,
+      })) as any;
+      const { readable, writable } = new TransformStream();
+      imageRes.body.pipeTo(writable);
+      return new Response(readable, {
+        status: 200,
+        headers,
+      });
+    } catch (error) {
+      return new Response(JSON.stringify(error), {
+        status: 500,
+      });
+    }
+  } else {
+    console.log('🎨 serve original image...');
+    return new Response(fileBuffer, {
+      status: 200,
+      headers,
     });
   }
 }
