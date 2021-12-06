@@ -10,7 +10,7 @@ interface RawContent {
   title: string;
   content: string;
   contributors: any;
-  monetization?: boolean;
+  monetization?: boolean | string;
 }
 
 interface ChapterParams {

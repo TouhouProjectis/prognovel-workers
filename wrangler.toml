@@ -6,5 +6,5 @@ route = ""
 zone_id = ""
 webpack_config = "webpack.config.js"
 kv-namespaces = [
-  { binding = "BUCKET", id = "" }
+  { binding = "BUCKET", id = "", preview_id = "1ec290c449c642a1abddbde04caee660" }
 ]
