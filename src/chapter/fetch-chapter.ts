@@ -12,7 +12,7 @@ export async function fetchChapter(params: ChapterParams): Promise<ChapterRespon
         title: cur.title,
         html: cur.content,
         contributors: cur.contributors || {},
-        monetization: cur.monetization || false,
+        monetization: Boolean(cur.monetization === true || cur.monetization === 'true'),
         status: 200,
       };
       prev[cur.id] = chapter;

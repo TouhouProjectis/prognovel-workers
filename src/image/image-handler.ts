@@ -25,16 +25,37 @@ export async function handleImage(event: FetchEvent): Promise<Response> {
 
 export async function handleFetchImage(event: FetchEvent): Promise<Response> {
   const url = new URL(event.request.url);
-  const params = {
+  const { novel, file, width, height, type, imageresizeservice } = {
     novel: url.searchParams.get('novel') || '',
     file: url.searchParams.get('file') || '',
+    width: url.searchParams.get('width') || 512,
+    height: url.searchParams.get('height') || 512,
+    type: url.searchParams.get('type') || 'jpeg',
+    imageresizeservice: url.searchParams.get('imageresizeservice') || '',
   };
+  const cacheKey = new Request(event.request.url, {
+    headers: event.request.headers,
+    method: 'GET',
+  });
+  const cache = caches.default;
 
-  const key = `image:${params.novel ? params.novel + ':' : ''}${params.file}`;
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    // 'Cache-Control': 'private, max-age=86400000',
+    'Content-Type': 'image/' + type,
+  };
+  // Check whether the value is already available in the cache
+  // if not, you will need to fetch it from origin, and store it in the cache
+  // for future access
+  let response = await cache.match(cacheKey);
+  console.log(response);
+  if (response) {
+    console.log('🚘 hitting CF cache!');
+    return new Response(response.body, { headers: { ...headers, 'Workers-Cache-Hit': 'YES' } });
+  }
+
+  const key = `image:${novel ? novel + ':' : ''}${file}`;
   let fileBuffer: any = await BUCKET.get(key, 'arrayBuffer');
-  console.log('🍯 halo');
-  const { imageResizerService, width, height, type } =
-    event.request.method === 'POST' ? await event.request.clone().json() : ({} as any);
 
   if (!fileBuffer) {
     return new Response('File not found.', {
@@ -42,15 +63,9 @@ export async function handleFetchImage(event: FetchEvent): Promise<Response> {
     });
   }
 
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    // 'Cache-Control': 'private, max-age=86400000',
-    'Content-Type': 'image/png',
-  };
-
-  if (imageResizerService) {
+  if (imageresizeservice) {
     const imgUrl =
-      imageResizerService +
+      imageresizeservice +
       `/resize?width=${width}&height=${height}&type=${type || 'jpeg'}&nocrop=false&stripmeta=true`;
     console.log('🎨 resize image...', imgUrl);
     try {
@@ -61,12 +76,14 @@ export async function handleFetchImage(event: FetchEvent): Promise<Response> {
         },
         body: fileBuffer,
       })) as any;
+      event.waitUntil(cache.put(cacheKey, imageRes.clone()));
       const { readable, writable } = new TransformStream();
       imageRes.body.pipeTo(writable);
-      return new Response(readable, {
+      response = new Response(readable, {
         status: 200,
         headers,
       });
+      return response;
     } catch (error) {
       return new Response(JSON.stringify(error), {
         status: 500,
@@ -78,5 +95,20 @@ export async function handleFetchImage(event: FetchEvent): Promise<Response> {
       status: 200,
       headers,
     });
+  }
+}
+
+async function putIntoCache(cache: Cache, key: Request, response: Response) {
+  try {
+    // const reader = (response.body as any).getReader();
+    // while (true) {
+    //   if (((await (reader as any).read()) as any).done) break;
+    // }
+    // console.log((await (reader as any).read()) as any);
+    await cache.put(key, response);
+    console.log('💾 put into cache');
+  } catch (error) {
+    console.log('💾 ERROR putting into cache');
+    console.error(error);
   }
 }
