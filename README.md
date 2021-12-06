@@ -13,9 +13,7 @@
 4. In terminal/command prompt where `wrangler.toml` is located, run `wrangler login` or `sudo wrangler login` if you're encountered permission error in Mac or Linux.
 5. Open your browser, navigate to `https://workers.cloudflare.com`, then login. In the dashboard, you'll see your Account ID on the right side of the page. Copy your Account ID and insert that into `wrangler.toml` file.
 6. Still in Cloudflare Workers dashboard, navigate to KV section under Workers Overview in the left sidebar. Create a new Namespace and grab your newly created Workers KV Namespace ID and insert it to `wrangler.toml` file again, as the ID for binding for "BUCKET" Namespace.
-
 7. Publish your Workers backend to Cloudflare servers by running `wrangler publish`. If you're encountered error in Mac or Linux, run it with `sudo wrangler publish`. You'll get the url of your backend from the last line from running the publish command.
-
 8. You'll see an empty or error page if you open your newly created Workers script in your browser. This is because the content is still empty. Proceed to [ProgNovel CLI guide](https://github.com/prognoveljs/prognovel-cli) to push contents to your backend.
 
 After you done, proceed in installing [CLI for ProgNovel](https://github.com/prognoveljs/prognovel-cli) to create content in your local computer. You need to publish content to your backend before connecting it to the frontend.
