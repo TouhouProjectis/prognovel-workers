@@ -7,7 +7,7 @@
 
 ## How to get ProgNovel backend
 
-1. Get a Github and Cloudflare Workers account.
+1. Get a [Github](https://www.github.com) and [Cloudflare Workers](https://workers.cloudflare.com) account.
 2. Clone or download this repo. Then open terminal or command prompt inside the downloaded repo folder, where you see files such as `package.json` or `wrangler.toml` located.
 3. You need to install Cloudflare Wrangler to communicate with Cloudflare server. First, make sure NodeJS is installed in your computer, then run `npm i @cloudflare/wrangler -g` or `sudo npm i @cloudflare/wrangler -g` if you're encountered permission error in Mac or Linux.
 4. In terminal/command prompt where `wrangler.toml` is located, run `wrangler login` or `sudo wrangler login` if you're encountered permission error in Mac or Linux.
