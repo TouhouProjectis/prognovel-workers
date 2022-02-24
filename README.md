@@ -7,13 +7,23 @@
 
 ## How to get ProgNovel backend
 
-1. Get a [Github](https://www.github.com) and [Cloudflare Workers](https://workers.cloudflare.com) account.
-2. Clone or download this repo. Then open terminal or command prompt inside the downloaded repo folder, where you see files such as `package.json` or `wrangler.toml` located.
-3. You need to install Cloudflare Wrangler to communicate with Cloudflare server. First, make sure NodeJS is installed in your computer, then run `npm i @cloudflare/wrangler -g` or `sudo npm i @cloudflare/wrangler -g` if you're encountered permission error in Mac or Linux.
-4. In terminal/command prompt where `wrangler.toml` is located, run `wrangler login` or `sudo wrangler login` if you're encountered permission error in Mac or Linux.
-5. Open your browser, navigate to `https://workers.cloudflare.com`, then login. In the dashboard, you'll see your Account ID on the right side of the page. Copy your Account ID and insert that into `wrangler.toml` file.
-6. Still in Cloudflare Workers dashboard, navigate to KV section under Workers Overview in the left sidebar. Create a new Namespace and grab your newly created Workers KV Namespace ID and insert it to `wrangler.toml` file again, as the ID for binding for "BUCKET" Namespace.
-7. Publish your Workers backend to Cloudflare servers by running `wrangler publish`. If you're encountered error in Mac or Linux, run it with `sudo wrangler publish`. You'll get the url of your backend from the last line from running the publish command.
-8. You'll see an empty or error page if you open your newly created Workers script in your browser. This is because the content is still empty. Proceed to [ProgNovel CLI guide](https://github.com/prognoveljs/prognovel-cli) to push contents to your backend.
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/prognoveljs/prognovel-workers)
+
+1. Make sure you have a Github account and Cloudflare Workers account first, and make sure you have publish content to Cloudflare Workers network by following [https://github.com/prognoveljs/prognovel-cli](https://github.com/prognoveljs/prognovel-cli). Start by clicking Cloudflare Workers deploy button above.
+2. Authorize Clouflare Workers with your Github account. If you are redirected to the main page of Cloudflare Workers deploy site after authorizing, simply click browser's go back button to return to ProgNovel backend's deploy page.
+3. Add your account information. Enter your Cloudflare Workers Account ID and API Token, which the deploy page has guide for.
+4. The deploy process will pause once you get to the next step and will ask you to enable Workflow for Github Action of your repo. Click the link to your repo and enable Github Action for your repo if you haven't already. **Don't go back to the deploy page yet!**
+5. Login to [https://workers.cloudflare.com](https://workers.cloudflare.com). Navigate to KV section under Workers Overview in the left sidebar. Create a new Namespace and grab your newly created Workers KV Namespace ID (or KV Namespace you created if you follow ProgNovel CLI guide). Then browse your repo for `wrangler.toml` file, edit it by adding KV namespace ID you have to binding `BUCKET`, just like below:
+
+```toml
+kv-namespaces = [
+  { binding = "BUCKET", id = "aA516gFxxxxxxx" }
+]
+```
+
+**NOTE**: Usually `wrangler.toml` will be located in `https://github.com/<YOUR-GITHUB-ACCOUNT>/prognovel-workers/blob/main/wrangler.toml`.
+
+6. Go back to the deploy page. Click the button "Workflow enabled". And wait.
+7. At this point installing backend for your ProgNovel is complete. However, if you haven't set up ProgNovel CLI and haven't push content to Cloudflare Workers network yet, your backend will result in error.
 
 After you done, proceed in installing [CLI for ProgNovel](https://github.com/prognoveljs/prognovel-cli) to create content in your local computer. You need to publish content to your backend before connecting it to the frontend.
