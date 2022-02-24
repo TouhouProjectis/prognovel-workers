@@ -6,3 +6,6 @@ route = ""
 zone_id = ""
 webpack_config = "webpack.config.js"
 compatibility_date = "2022-02-22"
+kv-namespaces = [
+  { binding = "BUCKET", id = "" }
+]
