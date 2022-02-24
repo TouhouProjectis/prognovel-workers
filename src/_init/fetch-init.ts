@@ -21,5 +21,6 @@ export async function fetchInit(event: FetchEvent, novels: string[]): Promise<In
     cors: meta.cors || '*',
     novelsMetadata: meta.novelsMetadata || [],
     disqus_id: meta.disqus_id || '',
+    image_resizer_service: meta.image_resizer_service || '',
   };
 }

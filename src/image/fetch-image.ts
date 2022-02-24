@@ -1,9 +1,8 @@
 import { getCache, getCacheKey } from '../utils/cache';
 import { imageBase64Encode } from '../utils/image';
-import { IMAGE_RESIZE_ENDPOINT } from '../index';
 
 export async function fetchImage(event: FetchEvent, { url, width, height, type }: ImageParams) {
-  const endpoint = `${IMAGE_RESIZE_ENDPOINT}crop?url=${url}&width=${width}&height=${height}&type=${type}`;
+  const endpoint = `${''}crop?url=${url}&width=${width}&height=${height}&type=${type}`;
   const cacheKey = getCacheKey(event, endpoint);
 
   // let t0 = Date.now();
