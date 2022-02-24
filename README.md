@@ -24,7 +24,9 @@ kv-namespaces = [
 **NOTE**: Usually `wrangler.toml` will be located in `https://github.com/<YOUR-GITHUB-ACCOUNT>/prognovel-workers/blob/main/wrangler.toml`.
 
 7. In the deploy page click the "Deploy" button and wait. Cross your fingers and hopefully the deploy page will give green "Successful" badge!
+
    ![Deploy successful](images/successful-deploy.png)
+
 8. (OPTIONAL) At this point installing backend for your ProgNovel is complete. However, if you haven't set up ProgNovel CLI and haven't push content to Cloudflare Workers network yet, or your KV Namespace is invalid, your backend will result in failed deploy. In this case, you don't have to restart installing the backend from step 1, as any commit to your forked repo of ProgNovel Backend will trigger the deploy in the background. Simply edit your `wrangler.toml` to correct configuration or give the file a blank new line to commit the file.
 
 After you done, proceed in installing [CLI for ProgNovel](https://github.com/prognoveljs/prognovel-cli) to create content in your local computer. You need to publish content to your backend before connecting it to the frontend.
