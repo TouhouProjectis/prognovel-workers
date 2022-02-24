@@ -107,6 +107,7 @@ interface InitResponse {
   cors: string;
   novelsMetadata: any[];
   disqus_id: string;
+  image_resizer_service: string;
 }
 
 declare function getCache(): {
