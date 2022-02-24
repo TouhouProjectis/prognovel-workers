@@ -1,10 +1,8 @@
-name = "api"
+name = "prognovel-api"
 type = "webpack"
 account_id = ""
 workers_dev = true
 route = ""
 zone_id = ""
 webpack_config = "webpack.config.js"
-kv-namespaces = [
-  { binding = "BUCKET", id = "", preview_id = "1ec290c449c642a1abddbde04caee660" }
-]
+compatibility_date = "2022-02-22"
