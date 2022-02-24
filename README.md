@@ -13,7 +13,7 @@
 2. Authorize Clouflare Workers with your Github account. If you are redirected to the main page of Cloudflare Workers deploy site after authorizing, simply click browser's go back button to return to ProgNovel backend's deploy page.
 3. Add your account information. Enter your Cloudflare Workers Account ID and API Token, which the deploy page has guide for.
 4. The deploy process will pause once you get to the next step and will ask you to enable Workflow for Github Action of your repo. Click the link to your repo and enable Github Action for your repo if you haven't already. **Don't go back to the deploy page yet!**
-5. Login to [https://workers.cloudflare.com](https://workers.cloudflare.com). Navigate to KV section under Workers Overview in the left sidebar. Create a new Namespace and grab your newly created Workers KV Namespace ID (or KV Namespace you created if you follow ProgNovel CLI guide). Then browse your repo for `wrangler.toml` file, edit it by adding KV namespace ID you have to binding `BUCKET`, just like below:
+5. Login to [https://workers.cloudflare.com](https://workers.cloudflare.com). Navigate to KV section under Workers Overview in the left sidebar. Create a new Namespace and grab your newly created Workers KV Namespace ID (or KV Namespace you created if you follow ProgNovel CLI guide). Then browse your forked repo for `wrangler.toml` file, edit it by adding KV namespace ID you have to binding `BUCKET`, just like below:
 
 ```toml
 kv-namespaces = [
