@@ -65,8 +65,8 @@ export async function handleFetchImage(event: FetchEvent): Promise<Response> {
 
   if (imageresizeservice) {
     const imgUrl =
-      imageresizeservice +
-      `/resize?width=${width}&height=${height}&type=${type || 'jpeg'}&nocrop=false&stripmeta=true`;
+      new URL(imageresizeservice).href +
+      `resize?width=${width}&height=${height}&type=${type || 'jpeg'}&nocrop=false&stripmeta=true`;
     console.log('🎨 resize image...', imgUrl);
     try {
       const imageRes = (await fetch(imgUrl, {
