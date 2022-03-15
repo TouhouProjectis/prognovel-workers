@@ -5,6 +5,7 @@ import { getMaxAge } from './utils/cache';
 import { handleImage, handleFetchImage } from './image/image-handler';
 import { handleVerifyReceipt } from './verify-wm-receipt/verify-receipt-handler';
 import { handleFetchData } from './data/fetch-handler';
+import { handleNews } from './news/news-handler';
 
 export const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -34,6 +35,8 @@ export async function handleRequest(event: FetchEvent): Promise<Response> {
       return handleImage(event);
     case '/fetchImage':
       return handleFetchImage(event);
+    case '/news':
+      return handleNews(event);
     case '/fetchData':
       return handleFetchData(event);
     case '/verify':

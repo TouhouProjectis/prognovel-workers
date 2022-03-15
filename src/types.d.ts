@@ -108,6 +108,7 @@ interface InitResponse {
   novelsMetadata: any[];
   disqus_id: string;
   image_resizer_service: string;
+  news: any;
 }
 
 declare function getCache(): {

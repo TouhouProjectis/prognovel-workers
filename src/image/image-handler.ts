@@ -41,7 +41,7 @@ export async function handleFetchImage(event: FetchEvent): Promise<Response> {
 
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    // 'Cache-Control': 'private, max-age=86400000',
+    'Cache-Control': 'public, max-age=86400000',
     'Content-Type': 'image/' + type,
   };
   // Check whether the value is already available in the cache

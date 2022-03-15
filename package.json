@@ -1,6 +1,6 @@
 {
   "name": "@prognovel/backend",
-  "version": "0.5.0",
+  "version": "0.6.4",
   "description": "Cloudflare worker TypeScript template",
   "main": "index.js",
   "scripts": {

@@ -1,14 +1,28 @@
-import { getGithubContentURL } from '../utils/github';
 import { DB } from '../_shared';
 
 export async function fetchInit(event: FetchEvent, novels: string[]): Promise<InitResponse> {
-  let meta;
+  let meta: any;
   try {
     meta = await DB.getSiteMetadata();
   } catch (error) {
     console.error(error);
     // return {}
   }
+
+  let news = meta.news
+    ? Object.keys(meta.news)
+        .map((news) => {
+          delete meta.news[news].content;
+          return {
+            id: news,
+            ...meta.news[news],
+          };
+        })
+        .sort((a, b) => {
+          return b.date - a.date;
+        })
+        .slice(0, 3)
+    : [];
 
   return {
     site_title: meta.site_title || '',
@@ -22,5 +36,6 @@ export async function fetchInit(event: FetchEvent, novels: string[]): Promise<In
     novelsMetadata: meta.novelsMetadata || [],
     disqus_id: meta.disqus_id || '',
     image_resizer_service: meta.image_resizer_service || '',
+    news,
   };
 }
