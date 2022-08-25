@@ -11,6 +11,7 @@ interface RawContent {
   content: string;
   contributors: any;
   monetization?: boolean | string;
+  spoiler?: boolean | string;
 }
 
 interface ChapterParams {
@@ -46,6 +47,7 @@ interface ChapterFetch {
   translators?: string | string[];
   editors?: string | string[];
   rating?: number;
+  spoiler?: boolean;
 }
 
 interface NovelResponse {
