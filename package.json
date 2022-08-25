@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "publish": "pnpm run build && wrangler publish dist/worker.production.js",
     "dev": "NODE_ENV=development npm run build",
     "format": "prettier --write src/**/*.{ts,js,css,json,md}",
     "test:clean": "rimraf ./transpiled/src ./transpiled/test",

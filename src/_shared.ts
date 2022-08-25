@@ -32,24 +32,21 @@ export const DB = {
     if (typeof volumeAndChapters === 'string') volumeAndChapters = [volumeAndChapters];
 
     return await Promise.all(
-      volumeAndChapters.map(
-        (index: string): Promise<RawContent> => {
-          return new Promise(async (resolve, reject) => {
-            try {
-              const result = this.content.content[index];
-              resolve({
-                id: index,
-                title: result.title,
-                contributors: result.contributors,
-                monetization: result.monetization,
-                content: result.body,
-              });
-            } catch (error) {
-              reject(error);
-            }
-          });
-        },
-      ),
+      volumeAndChapters.map((index: string): Promise<RawContent> => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            const result = this.content.content[index];
+            const res = { id: index, content: result.body };
+            delete result.body;
+            resolve({
+              ...res,
+              ...result,
+            });
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }),
     );
   },
   getSiteMetadata: async function () {
