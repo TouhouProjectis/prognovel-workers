@@ -1,11 +1,6 @@
 name = "prognovel-api"
-type = "webpack"
-account_id = ""
 workers_dev = true
-route = ""
-zone_id = ""
-webpack_config = "webpack.config.js"
-compatibility_date = "2022-02-22"
-kv-namespaces = [
+compatibility_date = "2022-08-25"
+kv_namespaces = [
   { binding = "BUCKET", id = "" }
 ]

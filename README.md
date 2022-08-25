@@ -16,7 +16,7 @@
 5. **Don't click the deploy button yet!** In a new browser tab login to [https://workers.cloudflare.com](https://workers.cloudflare.com). Navigate to KV section under Workers Overview in the left sidebar. Create a new Namespace and grab your newly created Workers KV Namespace ID (or KV Namespace you created if you follow ProgNovel CLI guide). Then browse your forked repo for `wrangler.toml` file, edit it by adding KV namespace ID you have to binding `BUCKET`, just like below:
 
 ```toml
-kv-namespaces = [
+kv_namespaces = [
   { binding = "BUCKET", id = "aA516gFxxxxxxx" }
 ]
 ```
