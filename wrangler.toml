@@ -2,5 +2,5 @@ name = "prognovel-api"
 workers_dev = true
 compatibility_date = "2022-08-25"
 kv_namespaces = [
-  { binding = "BUCKET", id = "" }
+  { binding = "BUCKET", id = "e5993fc616be450ea9af4bd66936bea4" }
 ]
